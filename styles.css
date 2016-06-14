@@ -1,4 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Rokkitt);
+ html {
+    background-color: #223C61;
+ }
  h1 {
     font-family:'Rokkitt', serif;
     text-align: center;
@@ -14,10 +17,13 @@ h3{
 }
 ul {
     list-style: none;
+    margin: 40px auto;
+    width: 300px;
 }
 li {
     font-family:'Rokkitt', serif;
     font-size: 2em;
+    margin: 12px 0;
 }
 input[type=radio] {
     border: 0px;
@@ -36,7 +42,7 @@ p {
     padding-top: 5px;
     position: relative;
 }
-.nextButton {
+.next-button {
     box-shadow: 3px 3px 5px #71E9FF;
     border-radius: 6px;
     width: 150px;
@@ -62,7 +68,7 @@ p {
     border-radius: 6px;
     text-align: center;
 }
-.quizMessage {
+.quiz-message {
     background-color: #41C2ED;
     border-radius: 6px;
     width: 30%;
@@ -73,13 +79,9 @@ p {
     color: #4c46f9;
     font-weight: 800;
 }
-.choiceList {
+.choice-list {
     font-family: Courier, serif;
     color: #58BFFF;
-    text-align: center;
-}
-.choicelist li {
-    display: inline-block;
 }
 .result {
     width: 30%;

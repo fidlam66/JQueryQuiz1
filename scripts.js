@@ -49,19 +49,19 @@ var quizOver = false;
 var resetTimer = false;
 $(document).ready(function () {
     // Ask for player name
-   $(document).find(".playerScore").html(playerName + "'s Score: <b>" + playerScore + "</b>");
+   $(".player-score").html(playerName + "'s Score: <b>" + playerScore + "</b>");
 
     // Display the first question
     displayCurrentQuestion();
-    $(this).find(".quizMessage").hide();
+    $(this).find(".quiz-message").hide();
 
     // On clicking next, display the next question
-    $(this).find(".nextButton").on("click", function () {
+    $(this).find(".next-button").on("click", function () {
         if (!quizOver) {
             processAnswer()
         } else { // quiz is over and clicked the next button (which now displays 'Play Again?'
             quizOver = false;
-            $(document).find(".nextButton").text("Next Question");
+            $(document).find(".next-button").text("Next Question");
             resetQuiz();
             displayCurrentQuestion();
             hideScore();
@@ -73,15 +73,14 @@ function processAnswer() {
     resetTimer = true;
     value = $("input[type='radio']:checked").val();
         // TODO: Remove any message -> not sure if this is efficient to call this each time....
-        $(document).find(".quizMessage").hide();
+        $(document).find(".quiz-message").hide();
 
         if (value == ( questions[currentQuestion].correctAnswer -1)) {
             updatePlayerScore()
-            $(".quizMessage").text("YOU WERE CORRECT").show();
-            $(".quizMessage").delay(1500).fadeOut(500);
+            quizMessage("YOU ARE CORRECT");
         } else {
-            $(".quizMessage").text("YOU WERE WRONG").show();
-            $(".quizMessage").delay(1500).fadeOut(500);
+            quizMessage("YOU ARE WRONG");
+            play('fuckyou')
         }
 
         currentQuestion++; // Since we have already displayed the first question on DOM ready
@@ -89,12 +88,16 @@ function processAnswer() {
             displayCurrentQuestion();
         } else {
             displayScore();
-            //                    $(document).find(".nextButton").toggle();
+            //                    $(document).find(".next-button").toggle();
             //                    $(document).find(".playAgainButton").toggle();
             // Change the text in the next button to ask if user wants to play again
-            $(document).find(".nextButton").text("Play Again?");
+            $(document).find(".next-button").text("Play Again?");
             quizOver = true;
         }
+}
+function quizMessage(message) {
+        $(".quiz-message").text(message).show().fadeTo(0, 1);
+        $(".quiz-message").delay(1500).fadeTo(1000, 0);
 }
 // This displays the current question AND the choices
 function displayCurrentQuestion() {
@@ -103,7 +106,7 @@ function displayCurrentQuestion() {
 
     var question = questions[currentQuestion].question;
     var questionClass = $(document).find(".quizContainer > .question");
-    var choiceList = $(document).find(".quizContainer > .choiceList");
+    var choiceList = $(document).find(".quizContainer > .choice-list");
     var numChoices = questions[currentQuestion].choices.length;
 
     // Set the questionClass text to the current question
@@ -139,7 +142,12 @@ function updatePlayerScore(increase=true) {
     } else {
         playerScore--
     }
-    $(document).find(".playerScore").html(playerName + "'s Score: <b>" + playerScore + "</b>");
+    $(".player-score").html(playerName + "'s Score: <b>" + playerScore + "</b>");
+}
+function play(file) {
+    var audio = new Audio('sounds/' + file + '.mp3');
+    audio.play();
+
 }
 
 function startTimer(duration, display) {
